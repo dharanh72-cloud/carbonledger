@@ -1,0 +1,1 @@
+ALTER TABLE `ledgerRecords` ADD CONSTRAINT `ledgerRecords_unique_claim_idx` UNIQUE(`ownerUserId`,`userId`,`ecoAction`);

@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  c-version:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: c-version
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build (warnings are errors)
+        run: make
+      - name: End-to-end tests
+        run: make test
+
+  web:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4   # reads the pnpm version from "packageManager" in web/package.json
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: web/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - name: Type check
+        run: pnpm check
+      - name: Unit tests
+        run: pnpm test
+      - name: Production build
+        run: pnpm build

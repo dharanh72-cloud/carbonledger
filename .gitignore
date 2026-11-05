@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.env
+.env.*
+*.exe
+*.dat
+*.o
+.manus-logs/
+.freebuff/
+.vscode/
+tempCodeRunnerFile.*
+c-version/carbonledger
